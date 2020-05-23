@@ -31,7 +31,7 @@ jobs:
       run: mvn --batch-mode --file pom.xml package -DskipTests=true
     - run: git fetch --unshallow
     - name: Scan with SonarCloud
-      run: mvn --batch-mode --file pom.xml sonar:sonar -Dsonar.organization=ccfenner
+      run: mvn --batch-mode --file pom.xml sonar:sonar -Dsonar.organization=ccfenner -Dsonar.login=$SONAR_TOKEN
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
