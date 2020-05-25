@@ -28,7 +28,9 @@ jobs:
         java-version: 11
     - run: |
         mvn --batch-mode verify sonar:sonar \
-        -Dsonar.login=${SONAR_TOKEN}
+        -Dsonar.login=${SONAR_TOKEN} \
+        -Dsonar.host.url=${SONAR_URL}
       env:
+        SONAR_URL: https://sonarcloud.io
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
