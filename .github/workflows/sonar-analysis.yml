@@ -1,0 +1,34 @@
+name: "CI"
+
+on:
+  pull_request:
+    branches:
+    - master
+  push:
+    branches:
+    - master
+    - sonarAction
+
+jobs:
+  Sonar:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-sonar-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-sonar-
+          ${{ runner.os }}-maven-
+    - uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - run: |
+        mvn --batch-mode verify sonar:sonar \
+        -Dsonar.login=${SONAR_TOKEN}
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
