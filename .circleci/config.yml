@@ -30,12 +30,3 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
-      - run:
-          name: Analyze on SonarCloud
-          command: mvn --batch-mode verify sonar:sonar --fail-never
-
-workflows:
-  main:
-    jobs:
-      - build:
-          context: SonarCloud
