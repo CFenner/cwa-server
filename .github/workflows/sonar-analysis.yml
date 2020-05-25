@@ -1,4 +1,4 @@
-name: "CI"
+name: "ci"
 
 on:
   pull_request:
@@ -10,8 +10,9 @@ on:
     - sonarAction
 
 jobs:
-  Sonar:
+  sonar:
     runs-on: ubuntu-latest
+    name: 'github actions: sonar'
     steps:
     - uses: actions/checkout@v2
       with:
