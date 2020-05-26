@@ -1,0 +1,31 @@
+name: prtrigger
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  sonar:
+    name: 'sonar on pr'
+
+    runs-on: ubuntu-latest
+    if: github.event.comment.body == '/sonar' && (github.event.comment.author_association == 'COLLABORATOR' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER')
+
+    steps:
+      - name: get pull request url
+        id: pullrequest
+        run: echo "::set-output name=pullrequest::$(curl ${{ github.event.comment.issue_url }} | jq '.pull_request.url' | sed 's/\"//g')"
+      - name: get branch name
+        id: branchname
+        run: echo "::set-output name=branchname::$(curl ${{ steps.pullrequest.outputs.pullrequest }} | jq '.head.ref' | sed 's/\"//g')"
+      - name: get repository
+        id: repository
+        run: echo "::set-output name=repository::$(curl ${{ steps.pullrequest.outputs.pullrequest }} | jq '.head.repo.full_name' | sed 's/\"//g')"
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ steps.repository.outputs.repository }}
+          ref: ${{ steps.branchname.outputs.branchname }}
+      - run: |
+          #git config --global user.name 'Your Name'
+          #git config --global user.email 'your-username@users.noreply.github.com'
+          git push origin HEAD:sonar-on-pr
