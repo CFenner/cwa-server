@@ -9,9 +9,10 @@ jobs:
     name: 'sonar on pr'
 
     runs-on: ubuntu-latest
-    if: github.event.comment.body == '/sonar' && (github.event.comment.author_association == 'COLLABORATOR' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER')
+    #if: github.event.comment.body == '/sonar' && (github.event.comment.author_association == 'COLLABORATOR' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER')
 
     steps:
+      - run: echo ${{ github.event.comment.body }}
       - name: get pull request url
         id: pullrequest
         run: echo "::set-output name=pullrequest::$(curl ${{ github.event.comment.issue_url }} | jq '.pull_request.url' | sed 's/\"//g')"
