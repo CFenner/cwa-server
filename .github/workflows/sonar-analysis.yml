@@ -1,13 +1,13 @@
 name: "ci"
 
 on:
-  pull_request:
-    branches:
-    - master
+#  pull_request:
+#    branches:
+#    - master
   push:
     branches:
-    - master
-    - sonarAction
+#    - master
+#    - sonarAction
     - chatops-sonar
 
 jobs:
