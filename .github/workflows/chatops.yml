@@ -1,4 +1,4 @@
-name: prtrigger
+name: ChatOps
 
 on:
   issue_comment:
@@ -6,13 +6,12 @@ on:
 
 jobs:
   sonar:
-    name: 'sonar on pr'
+    name: 'SonarCloud on PR'
 
     runs-on: ubuntu-latest
     if: github.event.comment.body == '/sonar' && (github.event.comment.author_association == 'COLLABORATOR' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER')
 
     steps:
-      - run: echo ${{ github.event.comment.body }}
       - name: get pull request url
         id: pullrequest
         run: echo "::set-output name=pullrequest::$(curl ${{ github.event.comment.issue_url }} | jq '.pull_request.url' | sed 's/\"//g')"
@@ -22,11 +21,17 @@ jobs:
       - name: get repository
         id: repository
         run: echo "::set-output name=repository::$(curl ${{ steps.pullrequest.outputs.pullrequest }} | jq '.head.repo.full_name' | sed 's/\"//g')"
+      - run: echo ${{ github.head_ref }} ${{ github.event.comment.body }} ${{ steps.repository.outputs.pullrequest }} ${{ steps.repository.outputs.repository }} ${{ steps.branchname.outputs.branchname }}
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - uses: actions/checkout@v2
         with:
+          persist-credentials: false
           repository: ${{ steps.repository.outputs.repository }}
           ref: ${{ steps.branchname.outputs.branchname }}
-      - run: |
-          #git config --global user.name 'Your Name'
-          #git config --global user.email 'your-username@users.noreply.github.com'
-          git push origin HEAD:sonar-on-pr
+      - run: git remote add upstream https://${CHATOPS_USER}:${CHATOPS_TOKEN}@github.com/$GITHUB_REPOSITORY
+        env:
+          CHATOPS_TOKEN: ${{ secrets.CHATOPS_TOKEN }}
+          CHATOPS_USER: ${{ secrets.CHATOPS_USER }}
+      - run: git push -f upstream HEAD:chatops-sonar
