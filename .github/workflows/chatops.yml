@@ -15,12 +15,12 @@ jobs:
       - name: get pull request url
         id: pullrequest
         run: |
-          echo "::set-output name=number::$(echo ${{ github.event.comment.issue_url }} | sed 's/https:\/\/api.github.com\/repos\/CCFenner\/cwa-server\/issues\///g')" \
+          echo "::set-output name=number::$(echo ${{ github.event.comment.issue_url }} | sed 's/https:\/\/api.github.com\/repos\/CCFenner\/cwa-server\/issues\///g')"
           echo "::set-output name=url::$(curl ${{ github.event.comment.issue_url }} | jq '.pull_request.url' | sed 's/\"//g')"
       - name: get branch name
         id: repository
         run: |
-          echo "::set-output name=branch::$(curl ${{ steps.pullrequest.outputs.url }} | jq '.head.ref' | sed 's/\"//g')" \
+          echo "::set-output name=branch::$(curl ${{ steps.pullrequest.outputs.url }} | jq '.head.ref' | sed 's/\"//g')"
           echo "::set-output name=slug::$(curl ${{ steps.pullrequest.outputs.url }} | jq '.head.repo.full_name' | sed 's/\"//g')"
       - run: |
           echo \
