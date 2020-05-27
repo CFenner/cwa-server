@@ -30,8 +30,9 @@ jobs:
           repository: ${{ steps.repository.outputs.repository }}
           ref: ${{ steps.branchname.outputs.branchname }}
 #      - run: git remote add upstream https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
-      - run: git remote add upstream https://github.com/$GITHUB_REPOSITORY
+      - run: git remote add upstream https://CCFenner:${CHATOPS_TOKEN}@github.com/$GITHUB_REPOSITORY
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          CHATOPS_TOKEN: ${{ secrets.CHATOPS_TOKEN }}
       - run: git push -f upstream HEAD:sonar-on-pr
