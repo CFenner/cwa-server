@@ -22,12 +22,12 @@ jobs:
         run: |
           echo "::set-output name=branch::$(curl ${{ steps.pullrequest.outputs.url }} | jq '.head.ref' | sed 's/\"//g')"
           echo "::set-output name=slug::$(curl ${{ steps.pullrequest.outputs.url }} | jq '.head.repo.full_name' | sed 's/\"//g')"
-      - run: |
-          echo \
-          PR Number: ${{ steps.pullrequest.outputs.number }} \
-          PR URL: ${{ steps.pullrequest.outputs.url }} \
-          PR Repository: ${{ steps.repository.outputs.slug }} \
-          PR Branch: ${{ steps.repository.outputs.branch }}
+#      - run: |
+#          echo \
+#          PR Number: ${{ steps.pullrequest.outputs.number }} \
+#          PR URL: ${{ steps.pullrequest.outputs.url }} \
+#          PR Repository: ${{ steps.repository.outputs.slug }} \
+#          PR Branch: ${{ steps.repository.outputs.branch }}
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
@@ -37,4 +37,5 @@ jobs:
         env:
           CHATOPS_TOKEN: ${{ secrets.CHATOPS_TOKEN }}
           CHATOPS_USER: ${{ secrets.CHATOPS_USER }}
-      - run: git push -f upstream HEAD:chatops-sonar-${{steps.pullrequest.outputs.number}}
+      - if: ${{ steps.repository.outputs.slug == 'CCFenner/cwa-server' }}
+        run: git push -f upstream HEAD:chatops-sonar-${{steps.pullrequest.outputs.number}}
