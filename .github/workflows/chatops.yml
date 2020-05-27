@@ -14,9 +14,7 @@ jobs:
     steps:
       - name: get pull request number
         id: prnumber
-        run: echo "::set-output name=prnumber::$(echo ${PR_URL/https:\/\/api.github.com\/repos\/CCFenner\/cwa-server\/issues\//})"
-        env:
-          PR_URL:  ${{ github.event.comment.issue_url }}
+        run: echo "::set-output name=prnumber::$(echo ${{ github.event.comment.issue_url }} | sed 's/https:\/\/api.github.com\/repos\/CCFenner\/cwa-server\/issues\///g'})"
       - name: get pull request url
         id: pullrequest
         run: echo "::set-output name=pullrequest::$(curl ${{ github.event.comment.issue_url }} | jq '.pull_request.url' | sed 's/\"//g')"
