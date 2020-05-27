@@ -29,4 +29,4 @@ jobs:
       - run: |
           #git config --global user.name 'Your Name'
           #git config --global user.email 'your-username@users.noreply.github.com'
-          git push origin HEAD:sonar-on-pr
+          git push -f origin HEAD:sonar-on-pr
