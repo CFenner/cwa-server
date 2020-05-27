@@ -26,7 +26,7 @@ jobs:
         run: echo "::set-output name=repository::$(curl ${{ steps.pullrequest.outputs.pullrequest }} | jq '.head.repo.full_name' | sed 's/\"//g')"
       - run: |
           echo \
-          PR Number: ${{ steps.repository.outputs.prnumber }} \
+          PR Number: ${{ steps.prnumber.outputs.prnumber }} \
           PR Number: ${PR_NUMBER} \
           PR Number: ${PR_URL/https:\/\/api.github.com\/repos\/CCFenner\/cwa-server\/issues\//} \
           PR URL: ${{ steps.repository.outputs.pullrequest }} \
