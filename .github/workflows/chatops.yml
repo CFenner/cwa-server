@@ -35,4 +35,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           CHATOPS_TOKEN: ${{ secrets.CHATOPS_TOKEN }}
+      - run: git rm .github/workflows/chatops.yml
       - run: git push -f upstream HEAD:sonar-on-pr
