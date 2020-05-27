@@ -30,6 +30,7 @@ jobs:
           echo \
           PR Number: ${{ steps.repository.outputs.prnumber }} \
           PR Number: ${PR_NUMBER} \
+          PR Number: ${PR_URL/https:\/\/api.github.com\/repos\/CCFenner\/cwa-server\/issues\//} \
           PR URL: ${{ steps.repository.outputs.pullrequest }} \
           PR Repository: ${{ steps.repository.outputs.repository }} \
           PR Branch: ${{ steps.branchname.outputs.branchname }}
