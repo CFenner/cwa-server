@@ -30,6 +30,5 @@ jobs:
           repository: ${{ steps.repository.outputs.repository }}
           ref: ${{ steps.branchname.outputs.branchname }}
       - run: |
-          #git config --global user.name 'Your Name'
-          #git config --global user.email 'your-username@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
           git push -f origin HEAD:sonar-on-pr
