@@ -27,6 +27,7 @@ jobs:
         run: echo "::set-output name=repository::$(curl ${{ steps.pullrequest.outputs.pullrequest }} | jq '.head.repo.full_name' | sed 's/\"//g')"
       - uses: actions/checkout@v2
         with:
+          persist-credentials: false
           repository: ${{ steps.repository.outputs.repository }}
           ref: ${{ steps.branchname.outputs.branchname }}
 #      - run: git remote add upstream https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
