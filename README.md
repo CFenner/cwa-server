@@ -11,6 +11,8 @@
     <a href="https://github.com/corona-warn-app/cwa-server/blob/master/LICENSE" title="License"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg?style=flat"></a>
 </p>
 
+dummy
+
 <p align="center">
   <a href="#development">Development</a> •
   <a href="#service-apis">Service APIs</a> •
