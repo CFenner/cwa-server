@@ -13,6 +13,9 @@ jobs:
 
     steps:
       - run: echo ${{ github.event.comment.body }}
+        env: 
+          GITHUB_TOKEN: ${{ secret.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secret.SONAR_TOKEN }}
       - name: get pull request url
         id: pullrequest
         run: echo "::set-output name=pullrequest::$(curl ${{ github.event.comment.issue_url }} | jq '.pull_request.url' | sed 's/\"//g')"
