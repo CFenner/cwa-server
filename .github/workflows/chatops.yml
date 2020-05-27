@@ -27,14 +27,13 @@ jobs:
       - run: |
           echo \
           PR Number: ${{ steps.prnumber.outputs.prnumber }} \
-          PR Number: ${PR_NUMBER} \
           PR Number: ${PR_URL/https:\/\/api.github.com\/repos\/CCFenner\/cwa-server\/issues\//} \
-          PR URL: ${{ steps.repository.outputs.pullrequest }} \
+          PR URL: ${{ steps.pullrequest.outputs.pullrequest }} \
           PR Repository: ${{ steps.repository.outputs.repository }} \
           PR Branch: ${{ steps.branchname.outputs.branchname }}
         env: 
           PR_URL:  ${{ github.event.comment.issue_url }}
-          PR_NUMBER: ${PR_URL/https:\/\/api.github.com\/repos\/CCFenner\/cwa-server\/issues\//}
+        #  PR_NUMBER: ${PR_URL/https:\/\/api.github.com\/repos\/CCFenner\/cwa-server\/issues\//}
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
