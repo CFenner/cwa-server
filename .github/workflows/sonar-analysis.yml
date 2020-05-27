@@ -1,19 +1,18 @@
 name: "ci"
 
 on:
-#  pull_request:
-#    branches:
-#    - master
+  pull_request:
+    branches:
+    - master
   push:
     branches:
-#    - master
-#    - sonarAction
-    - chatops-sonar
+    - master
+    - chatops-sonar-*
 
 jobs:
   sonar:
     runs-on: ubuntu-latest
-#    if: $GITHUB_REPOSITORY == 'CCFenner/cwa-server'
+    if: ${{ github.repository }} == 'CCFenner/cwa-server'
 
     name: 'github actions: sonar'
     steps:
